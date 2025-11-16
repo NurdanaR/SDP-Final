@@ -3,6 +3,8 @@ import builder.WorkoutPlan;
 import builder.WorkoutPlanBuilder;
 import factory.Exercise;
 import factory.ExerciseFactory;
+import decorator.TimedExercise;
+import decorator.WeightedExercise;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -41,6 +43,9 @@ public class FitnessApp {
                     demonstrateIntegration();
                     break;
                 case 6:
+                    demonstrateDecorator();
+                    break;
+                case 7:
                     running = false;
                     System.out.println("\nThank you for using the Fitness App!");
                     break;
@@ -58,7 +63,7 @@ public class FitnessApp {
         System.out.println("║          FITNESS APPLICATION                              ║");
         System.out.println("║                                                          ║");
         System.out.println("║          Design Patterns Implementation                  ║");
-        System.out.println("║          Student A: Factory + Builder                    ║");
+        System.out.println("║          Student A: Factory + Builder + Decorator        ║");
         System.out.println("║                                                          ║");
         System.out.println("╚══════════════════════════════════════════════════════════╝");
     }
@@ -72,7 +77,8 @@ public class FitnessApp {
         System.out.println("║ 3. Factory Pattern Demo                ║");
         System.out.println("║ 4. Builder Pattern Demo                ║");
         System.out.println("║ 5. Pattern Integration Demo            ║");
-        System.out.println("║ 6. Exit                                ║");
+        System.out.println("║ 6. Decorator Pattern Demo              ║");
+        System.out.println("║ 7. Exit                                ║");
         System.out.println("╚════════════════════════════════════════╝");
         System.out.print("Enter your choice: ");
     }
@@ -109,7 +115,28 @@ public class FitnessApp {
             System.out.print("Enter exercise type (cardio/strength/yoga/stretching): ");
             String type = scanner.nextLine();
 
-            Exercise exercise = exerciseFactory.createExercise(type);
+            System.out.print("Enter exercise name: ");
+            String name = scanner.nextLine();
+
+            Exercise exercise = exerciseFactory.createQuickExercise(type, name);
+
+            // Ask if user wants to add decorators
+            System.out.print("Add time constraint? (y/n): ");
+            if (scanner.nextLine().equalsIgnoreCase("y")) {
+                System.out.print("Enter duration in seconds: ");
+                int duration = scanner.nextInt();
+                scanner.nextLine();
+                exercise = new TimedExercise(exercise, duration);
+            }
+
+            System.out.print("Add weight? (y/n): ");
+            if (scanner.nextLine().equalsIgnoreCase("y")) {
+                System.out.print("Enter weight in kg: ");
+                double weight = scanner.nextDouble();
+                scanner.nextLine();
+                exercise = new WeightedExercise(exercise, weight);
+            }
+
             if (exercise != null) {
                 exercises.add(exercise);
                 System.out.println("Exercise added successfully!");
@@ -273,5 +300,86 @@ public class FitnessApp {
         System.out.println("   " + plan.getSummary());
 
         System.out.println("\nAll patterns work together seamlessly!");
+    }
+
+    private static void demonstrateDecorator() {
+        System.out.println("\nDECORATOR PATTERN DEMONSTRATION");
+        System.out.println("═══════════════════════════════════════");
+        System.out.println("The Decorator Pattern adds functionality to exercises dynamically.\n");
+
+        System.out.println("1. Basic Push-ups Exercise:");
+        Exercise pushups = exerciseFactory.createQuickExercise("strength", "Push-ups");
+        pushups.perform();
+
+        System.out.println("\n2. Adding Time constraint (60 seconds):");
+        Exercise timedPushups = new TimedExercise(pushups, 60);
+        timedPushups.perform();
+
+        System.out.println("\n3. Adding Weight constraint (+5kg):");
+        Exercise weightedTimedPushups = new WeightedExercise(timedPushups, 5);
+        weightedTimedPushups.perform();
+
+        System.out.println("\n4. Creating complex decorated exercise:");
+        Exercise complexExercise = new WeightedExercise(
+                new TimedExercise(
+                        exerciseFactory.createQuickExercise("strength", "Squats"),
+                        90
+                ),
+                10
+        );
+        complexExercise.perform();
+
+
+        System.out.println("\n╔════════════════════════════════════════╗");
+        System.out.println("║      INTERACTIVE DECORATOR DEMO        ║");
+        System.out.println("╚════════════════════════════════════════╝");
+
+        System.out.print("Choose base exercise (pushups/squats/lunges): ");
+        String baseName = scanner.nextLine();
+
+        Exercise baseExercise = exerciseFactory.createQuickExercise("strength", baseName);
+        Exercise currentExercise = baseExercise;
+
+        boolean decorating = true;
+        while (decorating) {
+            System.out.println("\nCurrent exercise: " + currentExercise.getDetails());
+            System.out.println("1. Add time constraint");
+            System.out.println("2. Add weight");
+            System.out.println("3. Finish decorating");
+            System.out.print("Choose option: ");
+
+            int option = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (option) {
+                case 1:
+                    System.out.print("Enter duration in seconds: ");
+                    int duration = scanner.nextInt();
+                    scanner.nextLine();
+                    currentExercise = new TimedExercise(currentExercise, duration);
+                    System.out.println("✓ Time constraint added!");
+                    break;
+                case 2:
+                    System.out.print("Enter weight in kg: ");
+                    double weight = scanner.nextDouble();
+                    scanner.nextLine();
+                    currentExercise = new WeightedExercise(currentExercise, weight);
+                    System.out.println("✓ Weight added!");
+                    break;
+                case 3:
+                    decorating = false;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+
+        System.out.println("\nFinal decorated exercise:");
+        System.out.println("Description: " + currentExercise.getDetails());
+        System.out.println("\nPerforming final exercise:");
+        currentExercise.perform();
+
+        System.out.println("\nDecorator Pattern allows dynamic functionality addition!");
+        System.out.println("Benefit: Extend functionality without modifying original classes");
     }
 }

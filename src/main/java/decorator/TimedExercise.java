@@ -13,29 +13,28 @@ public class TimedExercise extends ExerciseDecorator {
 
     @Override
     public String getName() {
-        return "";
+        return exercise.getName() + " (Timed)";
     }
-
-
 
     @Override
     public String getType() {
-        return "";
-    }
-
-    @Override
-    public void perform() {
-        super.perform();
-        System.out.println("Duration: " + seconds + " seconds");
+        return exercise.getType();
     }
 
     @Override
     public int getCalories() {
-        return 0;
+        return exercise.getCalories() + seconds / 5; // extra calories for duration
     }
 
     @Override
     public String getDetails() {
-        return "";
+        return exercise.getDetails() + ", Duration: " + seconds + " sec";
+    }
+
+    @Override
+    public void perform() {
+        exercise.perform();
+        System.out.println("Additional Time: " + seconds + " seconds");
+        System.out.println("Total Calories: ~" + getCalories() + " kcal");
     }
 }
