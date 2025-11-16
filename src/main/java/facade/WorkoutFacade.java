@@ -2,7 +2,8 @@ package facade;
 
 import Strategy.WorkoutStrategy;
 import Observer.*;
-import decorator.Exercise;
+import factory.Exercise;
+
 
 public class WorkoutFacade {
 

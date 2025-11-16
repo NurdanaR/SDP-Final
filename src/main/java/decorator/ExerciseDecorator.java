@@ -1,5 +1,7 @@
 package decorator;
 
+import factory.Exercise;
+
 public abstract class ExerciseDecorator implements Exercise {
 
     protected Exercise exercise;
