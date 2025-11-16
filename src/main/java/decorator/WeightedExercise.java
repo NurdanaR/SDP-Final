@@ -4,35 +4,37 @@ import factory.Exercise;
 
 public class WeightedExercise extends ExerciseDecorator {
 
-    private int weight;
+    private double extraWeight;
 
-    public WeightedExercise(Exercise exercise, int weight) {
+    public WeightedExercise(Exercise exercise, double extraWeight) {
         super(exercise);
-        this.weight = weight;
+        this.extraWeight = extraWeight;
     }
 
     @Override
     public String getName() {
-        return "";
-    }
-    @Override
-    public String getType() {
-        return "";
+        return exercise.getName() + " (Weighted)";
     }
 
     @Override
-    public void perform() {
-        super.perform();
-        System.out.println("Added weight: " + weight + " kg");
+    public String getType() {
+        return exercise.getType();
     }
 
     @Override
     public int getCalories() {
-        return 0;
+        return exercise.getCalories() + (int)(extraWeight * 0.5);
     }
 
     @Override
     public String getDetails() {
-        return "";
+        return exercise.getDetails() + ", Extra Weight: " + extraWeight + " kg";
+    }
+
+    @Override
+    public void perform() {
+        exercise.perform();
+        System.out.println("Added Weight: " + extraWeight + " kg");
+        System.out.println("Total Calories: ~" + getCalories() + " kcal");
     }
 }
