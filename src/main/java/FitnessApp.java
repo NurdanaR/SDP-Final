@@ -65,12 +65,13 @@ public class FitnessApp {
     }
 
     private static void displayWelcomeBanner() {
-        System.out.println("\n╔══════════════════════════════════════════════════════════╗");
+        System.out.println("\n╔════════════════════════════════════════════════════════╗");
         System.out.println("║                                                          ║");
-        System.out.println("║          FITNESS APPLICATION                              ║");
+        System.out.println("║          FITNESS APPLICATION                             ║");
         System.out.println("║                                                          ║");
         System.out.println("║          Design Patterns Implementation                  ║");
-        System.out.println("║          Student A: Factory + Builder + Decorator        ║");
+        System.out.println("║          Aknur: Factory + Builder + Decorator            ║");
+        System.out.println("║          Nurdana: Observer + Strategy + Facade           ║");
         System.out.println("║                                                          ║");
         System.out.println("╚══════════════════════════════════════════════════════════╝");
     }
