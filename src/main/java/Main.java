@@ -1,47 +1,27 @@
 import Strategy.*;
-import Observer.*;
-import java.util.Scanner;
+import decorator.*;
+import facade.WorkoutFacade;
 
 public class Main {
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("===== FITNESS APP =====");
-        System.out.println("Choose workout strategy:");
-        System.out.println("1 - Fat Burn");
-        System.out.println("2 - Muscle Gain");
-        System.out.print("Your choice: ");
+        WorkoutStrategy strategy = new FatBurnStrategy();
 
-        int choice = scanner.nextInt();
 
-        WorkoutStrategy strategy;
+        Exercise exercise = new Exercise() {
+            @Override
+            public void perform() {
+                System.out.println("Doing base exercise...");
+            }
+        };
 
-        if (choice == 1) {
-            strategy = new FatBurnStrategy();
-        } else if (choice == 2) {
-            strategy = new MuscleGainStrategy();
-        } else {
-            System.out.println("Invalid choice! Default Fat Burn Strategy selected.");
-            strategy = new FatBurnStrategy();
-        }
 
-        System.out.println("\n=== Applying selected strategy ===");
-        strategy.executeWorkout();
+        exercise = new WeightedExercise(exercise, 15);
+        exercise = new TimedExercise(exercise, 45);
 
-        // ==============================
-        // Observer Part
-        // ==============================
 
-        Timer timer = new Timer();
-        timer.attach(new CalorieCounter());
-        timer.attach(new HeartRateMonitor());
-
-        System.out.println("\n=== Starting workout session ===");
-        timer.tick(10);
-        timer.tick(20);
-        timer.tick(30);
-
-        scanner.close();
+        WorkoutFacade facade = new WorkoutFacade(strategy, exercise);
+        facade.startWorkout();
     }
 }
