@@ -1,11 +1,6 @@
 package factory;
 
-/**
- * YogaExercise - Concrete implementation for yoga poses and sequences
- * Examples: Downward Dog, Warrior Pose, Tree Pose
- *
- * @author Student A
- */
+
 public class YogaExercise implements Exercise {
 
     private String name;
@@ -32,7 +27,7 @@ public class YogaExercise implements Exercise {
 
     @Override
     public int getCalories() {
-        // Simple calculation: hold duration * 0.1
+
         return (int) (holdDuration * 0.1);
     }
 

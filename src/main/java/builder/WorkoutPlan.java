@@ -9,16 +9,15 @@ import java.util.List;
 
 public class WorkoutPlan {
 
-    // Required fields
     private String name;
     private List<Exercise> exercises;
 
-    // Optional fields
+
     private int sets;
     private int reps;
-    private int restTime;        // seconds between sets
-    private int totalDuration;   // minutes
-    private String difficulty;   // Beginner, Intermediate, Advanced
+    private int restTime;
+    private int totalDuration;
+    private String difficulty;
     private String description;
 
     WorkoutPlan(WorkoutPlanBuilder builder) {

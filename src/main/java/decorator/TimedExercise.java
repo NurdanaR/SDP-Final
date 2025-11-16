@@ -23,7 +23,7 @@ public class TimedExercise extends ExerciseDecorator {
 
     @Override
     public int getCalories() {
-        return exercise.getCalories() + seconds / 5; // extra calories for duration
+        return exercise.getCalories() + seconds / 5;
     }
 
     @Override

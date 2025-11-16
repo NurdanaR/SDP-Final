@@ -27,7 +27,7 @@ public class StretchingExercise implements Exercise {
 
     @Override
     public int getCalories() {
-        // Simple calculation: hold time * 0.05 (stretching burns fewer calories)
+
         return (int) (holdTime * 0.05);
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class WorkoutPlanBuilder {
 
-    // Same fields as WorkoutPlan
+
     String name;
     List<Exercise> exercises;
     int sets;
@@ -20,11 +20,11 @@ public class WorkoutPlanBuilder {
 
     public WorkoutPlanBuilder() {
         this.exercises = new ArrayList<>();
-        this.sets = 3;              // Default: 3 sets
-        this.reps = 10;             // Default: 10 reps
-        this.restTime = 60;         // Default: 60 seconds rest
-        this.totalDuration = 45;    // Default: 45 minutes
-        this.difficulty = "Intermediate";  // Default difficulty
+        this.sets = 3;
+        this.reps = 10;
+        this.restTime = 60;
+        this.totalDuration = 45;
+        this.difficulty = "Intermediate";
         this.description = "";
     }
 

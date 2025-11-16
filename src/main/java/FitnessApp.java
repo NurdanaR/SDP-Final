@@ -20,7 +20,7 @@ public class FitnessApp {
     private static ExerciseFactory exerciseFactory = new ExerciseFactory();
     private static WorkoutDirector director = new WorkoutDirector();
 
-    public static void main(String[] args) {
+    public static void run() {
 
         displayWelcomeBanner();
 
@@ -129,7 +129,7 @@ public class FitnessApp {
 
             Exercise exercise = exerciseFactory.createQuickExercise(type, name);
 
-            // Ask if user wants to add decorators
+
             System.out.print("Add time constraint? (y/n): ");
             if (scanner.nextLine().equalsIgnoreCase("y")) {
                 System.out.print("Enter duration in seconds: ");
