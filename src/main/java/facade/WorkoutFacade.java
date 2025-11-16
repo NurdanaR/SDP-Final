@@ -24,18 +24,20 @@ public class WorkoutFacade {
 
 
         Timer timer = new Timer();
-        timer.attach(new CalorieCounter());
-        timer.attach(new HeartRateMonitor());
+        CalorieCounter calorieCounter = new CalorieCounter();
+        HeartRateMonitor heartRateMonitor = new HeartRateMonitor();
 
+        timer.attach(calorieCounter);
+        timer.attach(heartRateMonitor);
 
         System.out.println("\nPerforming exercise:");
         exercise.perform();
 
-
         System.out.println("\nRunning time tracking...");
-        timer.tick(10);
-        timer.tick(20);
-        timer.tick(30);
+        for (int seconds : new int[]{10, 20, 30}) {
+            timer.tick(seconds);
+            try { Thread.sleep(500); } catch (InterruptedException e) {}
+        }
 
         System.out.println("===== WORKOUT COMPLETE =====");
     }

@@ -10,6 +10,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import Strategy.WorkoutStrategy;
+import Strategy.FatBurnStrategy;
+import facade.WorkoutFacade;
+
 public class FitnessApp {
 
     private static Scanner scanner = new Scanner(System.in);
@@ -46,6 +50,9 @@ public class FitnessApp {
                     demonstrateDecorator();
                     break;
                 case 7:
+                    demonstrateFacadeDemo() ;
+                    break;
+                case 8:
                     running = false;
                     System.out.println("\nThank you for using the Fitness App!");
                     break;
@@ -78,7 +85,8 @@ public class FitnessApp {
         System.out.println("║ 4. Builder Pattern Demo                ║");
         System.out.println("║ 5. Pattern Integration Demo            ║");
         System.out.println("║ 6. Decorator Pattern Demo              ║");
-        System.out.println("║ 7. Exit                                ║");
+        System.out.println("║ 7. Facade Pattern Demo                 ║");
+        System.out.println("║ 8. Exit                                ║");
         System.out.println("╚════════════════════════════════════════╝");
         System.out.print("Enter your choice: ");
     }
@@ -302,6 +310,19 @@ public class FitnessApp {
         System.out.println("\nAll patterns work together seamlessly!");
     }
 
+    private static void demonstrateFacadeDemo() {
+        System.out.println("\nFACADE PATTERN DEMONSTRATION");
+        System.out.println("═══════════════════════════════════════");
+
+        WorkoutStrategy strategy = new FatBurnStrategy();
+
+        Exercise exercise = exerciseFactory.createQuickExercise("cardio", "Running");
+
+        WorkoutFacade facade = new WorkoutFacade(strategy, exercise);
+
+        facade.startWorkout();
+    }
+
     private static void demonstrateDecorator() {
         System.out.println("\nDECORATOR PATTERN DEMONSTRATION");
         System.out.println("═══════════════════════════════════════");
@@ -373,6 +394,7 @@ public class FitnessApp {
                     System.out.println("Invalid option.");
             }
         }
+
 
         System.out.println("\nFinal decorated exercise:");
         System.out.println("Description: " + currentExercise.getDetails());
